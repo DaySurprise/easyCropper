@@ -12,9 +12,11 @@ layui.config({
         render: function(e){
             var self = this,
                 elem = e.elem,
+                defaultImg = e.defaultImg == undefined ? "" : e.defaultImg,
                 saveW = e.saveW,
                 saveH = e.saveH,
                 mark = e.mark,
+                size = e.size == undefined ? 1024 : e.size,
                 area = e.area,
                 url = e.url,
                 done = e.done;
@@ -24,6 +26,7 @@ layui.config({
             var uploadId = elemName + 'Upload';
             var imageId = elemName + 'Image';
             var previewId = elemName + 'Preview';
+            console.log(cropperDivId);
             // 注意更改这里css的路径
             var cropperHtml = '<link rel="stylesheet" href="/admin/layui/easyCropper/cropper.css">\n' +
                 '<div class="layui-fluid" style="display: none" id="'+cropperDivId+'">\n' +
@@ -34,12 +37,12 @@ layui.config({
                 '            </label>\n' +
                 '            <input class="layui-upload-file" id="'+uploadId+'" type="file" value="选择图片">\n' +
                 '        </div>\n' +
-                '        <div class="layui-form-mid layui-word-aux">图片的尺寸限定280x160px,大小在2048kb以内</div>\n' +
+                '        <div class="layui-form-mid layui-word-aux">建议:图片的尺寸'+saveW+'x'+saveH+'px,大小在'+size+'kb以内</div>\n' +
                 '    </div>\n' +
                 '    <div class="layui-row layui-col-space15">\n' +
                 '        <div class="layui-col-xs9">\n' +
                 '            <div style="width:600px;height:300px;background-color: rgb(247, 247, 247);">\n' +
-                '                <img id="'+imageId+'" src="" >\n' +
+                '                <img id="'+imageId+'" src="'+defaultImg+'" >\n' +
                 '            </div>\n' +
                 '        </div>\n' +
                 '        <div class="layui-col-xs3">\n' +
@@ -78,7 +81,8 @@ layui.config({
                                 dragMode:'crop',
                                 guides : false, // 去掉裁剪框里面白色虚线
                                 responsive:false, // 是否在调整窗口大小的时候重新渲染cropper
-                                restore:false // 是否在调整窗口大小后恢复裁剪的区域
+                                restore:false, // 是否在调整窗口大小后恢复裁剪的区域
+                                checkCrossOrigin: false // 是否检测跨域
                             };
             // 点击按钮 弹出elem对应的裁剪界面
             $(elem).on('click',function () {
@@ -100,6 +104,7 @@ layui.config({
                 var event = $(this).attr("cropper-event");
                 //监听确认保存图像
                 if(event === 'confirmSave'){
+                    image.crossOrigin='anonymous';//解决跨域图片问题
                     image.cropper("getCroppedCanvas",{
                         width: saveW,
                         height: saveH
@@ -120,9 +125,11 @@ layui.config({
                                     layer.closeAll('page');
                                     return done(result.msg);
                                 }else if(result.code == -1){
-                                    layer.alert(result.msg,{icon: 5});
+                                    layer.msg(result.msg,{icon: 5});
                                 }
-
+                            },
+                            error:function (result) {
+                                layer.msg("服务器繁忙,请稍后重试",{icon: 5});
                             }
                         });
                     });
@@ -139,6 +146,12 @@ layui.config({
                     var r= new FileReader();
                     // 拿到传的文件
                     var f=this.files[0];
+                    console.dir(f)
+                    var uploadFileSize = f.size/1024;
+                    if (uploadFileSize > size){
+                        layer.msg("上传文件不得超过"+size+"K",{icon:5});
+                        return false;
+                    }
                     r.readAsDataURL(f);
                     r.onload=function (e) {
                         image.cropper('destroy').attr('src', this.result).cropper(options).cropper('setData',{width:saveW,height:saveH});
