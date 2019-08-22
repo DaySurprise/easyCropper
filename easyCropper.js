@@ -24,7 +24,6 @@ layui.config({
             var uploadId = elemName + 'Upload';
             var imageId = elemName + 'Image';
             var previewId = elemName + 'Preview';
-            console.log(cropperDivId);
             // 注意更改这里css的路径
             var cropperHtml = '<link rel="stylesheet" href="/admin/layui/easyCropper/cropper.css">\n' +
                 '<div class="layui-fluid" style="display: none" id="'+cropperDivId+'">\n' +
@@ -141,7 +140,6 @@ layui.config({
                     // 拿到传的文件
                     var f=this.files[0];
                     r.readAsDataURL(f);
-                    console.dir(r)
                     r.onload=function (e) {
                         image.cropper('destroy').attr('src', this.result).cropper(options).cropper('setData',{width:saveW,height:saveH});
                     };
