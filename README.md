@@ -7,6 +7,15 @@
 
 集成了cropper，cropper官网地址：cropper官网;
 
+# 功能介绍
+  1. 图片裁剪
+  2. 保存尺寸设置 
+  3. 默认图片回显 
+  4. 大小限制 
+  5. 裁剪框比例设置 
+  6. 滚轮放大缩小图片 
+  7. 图片旋转
+
 # 使用教程
 
 1.为一个按钮绑定easyCropper组件
@@ -33,6 +42,8 @@
         //创建一个图片裁剪上传组件
         var productImgCropper = easyCropper.render({
             elem: '#productImgButton'
+            ,defaultImg: '/admin/images/demo.jpg' // 默认图片 选填
+            ,size: 2048    // 大小限制 默认1024k 选填
             ,saveW:280     //保存宽度
             ,saveH:160     //保存高度
             ,mark:7/4   //选取比例
@@ -53,6 +64,7 @@
 1. 注意修改cropper文件夹为你自己的地址
 2. 注意easyCropper.js中css地址
 3. 注意上传到服务器成功后返回的是一个图片地址
+4. 默认图片 defaultImg 和 大小限制 size默认为1024k(1M) 是 选填项
 
 # 参与贡献
 
