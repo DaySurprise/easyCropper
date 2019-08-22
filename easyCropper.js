@@ -1,5 +1,5 @@
 /*!
- * Cropper v3.0.0
+ * easyCropper v1.0.0
  */
 
 layui.config({
@@ -52,16 +52,16 @@ layui.config({
                 '        <div class="layui-col-xs9">\n' +
                 '            <div class="layui-row">\n' +
                 '                <div class="layui-col-xs6">\n' +
-                '                    <button type="button" class="layui-btn layui-icon layui-icon-left" easyCropper-event="rotate" data-option="-15" title="Rotate -15 degrees"> 向左旋转15°</button>\n' +
-                '                    <button type="button" class="layui-btn layui-icon layui-icon-right" easyCropper-event="rotate" data-option="15" title="Rotate 15 degrees"> 向右旋转15°</button>\n' +
+                '                    <button type="button" class="layui-btn layui-icon layui-icon-left" cropper-event="rotate" data-option="-15" title="Rotate -15 degrees"> 向左旋转15°</button>\n' +
+                '                    <button type="button" class="layui-btn layui-icon layui-icon-right" cropper-event="rotate" data-option="15" title="Rotate 15 degrees"> 向右旋转15°</button>\n' +
                 '                </div>\n' +
                 '                <div class="layui-col-xs5" style="text-align: right;">\n' +
-                '                    <button type="button" class="layui-btn layui-icon layui-icon-refresh" easyCropper-event="reset" title="重置图片"></button>\n' +
+                '                    <button type="button" class="layui-btn layui-icon layui-icon-refresh" cropper-event="reset" title="重置图片"></button>\n' +
                 '                </div>\n' +
                 '            </div>\n' +
                 '        </div>\n' +
                 '        <div class="layui-col-xs3">\n' +
-                '            <button class="layui-btn layui-btn-fluid" easyCropper-event="confirmSave" type="button"> 保存修改</button>\n' +
+                '            <button class="layui-btn layui-btn-fluid" cropper-event="confirmSave" type="button"> 保存修改</button>\n' +
                 '        </div>\n' +
                 '    </div>\n' +
                 '</div>';
@@ -98,7 +98,7 @@ layui.config({
                 });
             });
             $(".layui-btn").on('click',function () {
-                var event = $(this).attr("easyCropper-event");
+                var event = $(this).attr("cropper-event");
                 //监听确认保存图像
                 if(event === 'confirmSave'){
                     image.cropper("getCroppedCanvas",{
