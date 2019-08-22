@@ -26,7 +26,7 @@ layui.config({
             var previewId = elemName + 'Preview';
             console.log(cropperDivId);
             // 注意更改这里css的路径
-            var cropperHtml = '<link rel="stylesheet" href="/admin/layui/easyCropper/easyCropper.css">\n' +
+            var cropperHtml = '<link rel="stylesheet" href="/admin/layui/easyCropper/cropper.css">\n' +
                 '<div class="layui-fluid" style="display: none" id="'+cropperDivId+'">\n' +
                 '    <div class="layui-form-item">\n' +
                 '        <div class="layui-input-inline layui-btn-container" style="width: auto;">\n' +
